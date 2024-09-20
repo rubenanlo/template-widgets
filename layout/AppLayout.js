@@ -1,7 +1,10 @@
-import { GeistSans } from "geist/font/sans";
+import Navbar from "@/components/Navbar";
 const AppLayout = ({ children }) => {
   return (
-    <main className={`${GeistSans.className} bg-background`}>{children}</main>
+    <main className="bg-background font-interphase">
+      <Navbar />
+      {children}
+    </main>
   );
 };
 
