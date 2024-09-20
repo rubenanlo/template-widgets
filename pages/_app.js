@@ -1,9 +1,10 @@
+import AppLayout from "@/layout/AppLayout";
 import "@/styles/globals.css";
-import { GeistSans } from "geist/font/sans";
+
 const App = ({ Component, pageProps }) => (
-  <main className={GeistSans.className}>
+  <AppLayout>
     <Component {...pageProps} />
-  </main>
+  </AppLayout>
 );
 
 export default App;
