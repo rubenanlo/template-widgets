@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import { fontFamily } from "tailwindcss/defaultTheme";
+const aspectRatio = require("@tailwindcss/aspect-ratio");
 
 module.exports = {
   content: [
@@ -13,6 +14,7 @@ module.exports = {
       colors: {
         background: "#080808",
         foreground: "var(--foreground)",
+        backDrop: "#ffffff",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
@@ -20,5 +22,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [aspectRatio],
 };
