@@ -1,6 +1,7 @@
 {
   "rules": {
-    "react/react-in-jsx-scope": "off" // Disable the rule requiring React in scope
+    "react/react-in-jsx-scope": "off", // Disable the rule requiring React in scope
+    "react/prop-types": "off" // Disable the rule requiring prop-types
   },
   "extends": [
     "next/core-web-vitals",
