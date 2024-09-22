@@ -17,8 +17,8 @@ const AppLayout = ({ children }) => {
       <Button onMouseEnter={() => setIsWidgetsOn(!isWidgetsOn)} variant="tag" />
       <Show isTrue={[isWidgetsOn]}>
         <Container className="absolute top-0 h-screen w-screen bg-backDrop opacity-30" />
+        <WidgetsLayout />
       </Show>
-      <WidgetsLayout />
     </main>
   );
 };
