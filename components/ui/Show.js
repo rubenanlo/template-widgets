@@ -51,10 +51,14 @@ const ShowShortCircuit = ({ isTrue, children }) => {
         return child;
       }
 
-      const currentCondition = isTrue[indexRef.current];
+      // Combine conditions if `isTrue` is an array of conditions
+      const combinedCondition = Array.isArray(isTrue)
+        ? isTrue.every(Boolean) // `every` ensures all conditions are true
+        : isTrue;
+
       indexRef.current += 1;
 
-      if (!currentCondition) {
+      if (!combinedCondition) {
         return null;
       }
 
