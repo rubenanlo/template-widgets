@@ -14,7 +14,7 @@ module.exports = {
       colors: {
         background: "#080808",
         foreground: "var(--foreground)",
-        backDrop: "#ffffff",
+        backDrop: "#252424",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],

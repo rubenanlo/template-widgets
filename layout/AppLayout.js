@@ -6,17 +6,21 @@ import { Show } from "@/components/ui/Show";
 import WidgetsLayout from "@/layout/WidgetsLayout";
 import { useGeneralStore } from "@/providers/generalStore";
 
+const BackDrop = () => (
+  <Container className="absolute top-0 h-screen w-screen bg-backDrop opacity-70" />
+);
+
 const AppLayout = ({ children }) => {
   const { isWidgetsOn, setIsWidgetsOn } = useGeneralStore();
   return (
-    <main className="relative min-h-screen bg-background">
+    <main className="relative h-screen bg-background">
       <Navbar />
       <Container as="section" className="px-20 pb-5 pt-20">
         {children}
       </Container>
       <Button onMouseEnter={() => setIsWidgetsOn(!isWidgetsOn)} variant="tag" />
       <Show isTrue={[isWidgetsOn]}>
-        <Container className="absolute top-0 h-screen w-screen bg-backDrop opacity-30" />
+        <BackDrop />
         <WidgetsLayout />
       </Show>
     </main>
