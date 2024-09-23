@@ -4,30 +4,31 @@ import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 import { motion } from "framer-motion";
 import clsx from "clsx";
+import { Show } from "@/components/ui/Show";
 import { turnObjectIntoString } from "@/helpers/manipulateText";
 import images from "@/public/images.json";
-import { Show } from "./Show";
 
 export const Container = ({ children, as, className, ...props }) => {
   let Component = as ?? "div";
-  const classNameProp = turnObjectIntoString(className);
 
   return (
-    <Component className={clsx(classNameProp)} {...props}>
+    <Component className={clsx(className)} {...props}>
       {children}
     </Component>
   );
 };
 
-export function AnimatedContainer({ children, className, ...props }) {
-  const classNameProps = turnObjectIntoString(className);
-
+Container.Animated = function ContainerAnimated({
+  children,
+  className,
+  ...props
+}) {
   return (
-    <motion.div {...props} className={clsx(classNameProps)}>
+    <motion.div className={clsx(className)} {...props}>
       {children}
     </motion.div>
   );
-}
+};
 
 Container.Section = function ContainerSection({
   children,
