@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion";
 import { Children, isValidElement, cloneElement } from "react";
 
 // This component handles when to show or hide children based on the `isTrue`
@@ -29,8 +30,10 @@ import { Children, isValidElement, cloneElement } from "react";
 //     <div>Hidden</div>
 //   </Show.Else>
 
-export const Show = ({ ternary, isTrue, children }) => {
+export const Show = ({ ternary, isTrue, children, animatePresence }) => {
   if (ternary) return <ShowTernary {...{ isTrue, children }} />;
+  if (animatePresence)
+    return <ShowShortCircuitAnimated {...{ isTrue, children }} />;
   return <ShowShortCircuit {...{ isTrue, children }} />;
 };
 
@@ -77,6 +80,50 @@ const ShowShortCircuit = ({ isTrue, children }) => {
 
   const indexRef = { current: 0 };
   return <>{renderChildren(children, isTrue, indexRef)}</>;
+};
+
+const ShowShortCircuitAnimated = ({ isTrue, children }) => {
+  const renderChildren = (children, isTrue, indexRef) => {
+    return Children.map(children, (child) => {
+      if (!isValidElement(child)) {
+        return child; // Return non-element children directly
+      }
+
+      const combinedCondition = Array.isArray(isTrue)
+        ? isTrue.every(Boolean) // Check if all conditions are true
+        : isTrue;
+
+      // Increment index reference for tracking
+      indexRef.current += 1;
+
+      // Only render children if the condition is true
+      if (!combinedCondition) {
+        return null;
+      }
+
+      // Handle nested children
+      if (child.props.children) {
+        const nestedChildren = renderChildren(
+          child.props.children,
+          isTrue,
+          indexRef,
+        );
+        return cloneElement(child, { children: nestedChildren });
+      }
+
+      return child;
+    });
+  };
+
+  const indexRef = { current: 0 };
+
+  return (
+    <AnimatePresence>
+      {renderChildren(children, isTrue, indexRef).map((child) =>
+        child ? child : null,
+      )}
+    </AnimatePresence>
+  );
 };
 
 /**

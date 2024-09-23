@@ -3,25 +3,40 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Show } from "@/components/ui/Show";
-import WidgetsLayout from "@/layout/WidgetsLayout";
 import { useGeneralStore } from "@/providers/generalStore";
+import { showUp } from "@/library/animations";
 
-const BackDrop = () => (
-  <Container className="absolute top-0 h-screen w-screen bg-backDrop opacity-70" />
+const BackDrop = (props) => (
+  <Container.Animated
+    className="absolute top-0 h-screen w-screen bg-backDrop"
+    {...showUp}
+    {...props}
+  />
+);
+
+const WidgetsToggle = ({ isWidgetsOn, setIsWidgetsOn }) => (
+  <Button
+    onMouseEnter={() => setIsWidgetsOn(!isWidgetsOn)}
+    onMouseLeave={() => setIsWidgetsOn(!isWidgetsOn)}
+    variant="modalToggle"
+  />
 );
 
 const AppLayout = ({ children }) => {
   const { isWidgetsOn, setIsWidgetsOn } = useGeneralStore();
+
   return (
     <main className="relative h-screen bg-background">
       <Navbar />
       <Container as="section" className="px-20 pb-5 pt-20">
         {children}
       </Container>
-      <Button onMouseEnter={() => setIsWidgetsOn(!isWidgetsOn)} variant="tag" />
-      <Show isTrue={[isWidgetsOn]}>
+      <WidgetsToggle
+        isWidgetsOn={isWidgetsOn}
+        setIsWidgetsOn={setIsWidgetsOn}
+      />
+      <Show isTrue={[isWidgetsOn]} animatePresence>
         <BackDrop />
-        <WidgetsLayout />
       </Show>
     </main>
   );

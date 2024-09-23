@@ -7,7 +7,7 @@ export const Button = ({
   ...props
 }) => {
   const variants = {
-    tag: "absolute right-0 h-8 w-5 rounded-2xl rounded-br-none rounded-tr-none border-y border-l border-white/50",
+    tag: "absolute right-0 h-8 w-5  rounded-2xl rounded-br-none rounded-tr-none border-y border-l border-white/50",
     default: "",
   };
   const classNameProps = clsx(className, variants[variant]);
