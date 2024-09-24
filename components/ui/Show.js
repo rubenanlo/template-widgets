@@ -1,25 +1,21 @@
+import { Children } from "react";
 import { AnimatePresence } from "framer-motion";
-import { Children, isValidElement, cloneElement } from "react";
 
-// This component handles when to show or hide children based on the `isTrue`
-// prop. This accounts for two possible scenarios: If we want to use a
-// short-circuit rendering (i.e., &&) or a ternary conditional rendering (i.e.,
-// ? :).
+// This component handles the conditional rendering of children based on the `isTrue` prop.
+// It supports two scenarios: short-circuit rendering and ternary conditional rendering.
 
-// 1. Short-circuit rendering: This is the default behavior. The isTrue prop
-//    only accepts an array of boolean values. If you don't need to render any
-//    DOM element when the condition is false, you need to use this approach so
-//    that an empty HTML is not generated in the DOM.
+// 1. Short-circuit rendering: This is the default behavior. The `isTrue` prop
+//    accepts a boolean value. If false, the component renders nothing, ensuring
+//    no empty HTML elements are generated in the DOM.
 
-// 2. Ternary conditional rendering: If you want to use a ternary conditional
-//    rendering, you have to use the `ternary` prop, along with Show.When,
-//    Show.Else. The isTrue prop needs to be a boolean in this case
+// 2. Ternary conditional rendering: If you want to use a ternary conditional,
+//    you must use the `ternary` prop along with `Show.When` and `Show.Else`.
+//    The `isTrue` prop also needs to be a boolean in this case.
 
 // Usage:
 // Short-circuit rendering:
-// <Show isTrue={[true, false]}>
+// <Show isTrue={true}>
 //   <div>Visible</div>
-//   <div>Hidden</div>
 // </Show>
 // Ternary conditional rendering:
 // <Show ternary>
@@ -29,6 +25,7 @@ import { Children, isValidElement, cloneElement } from "react";
 //   <Show.Else>
 //     <div>Hidden</div>
 //   </Show.Else>
+// </Show>
 
 export const Show = ({ ternary, isTrue, children, animatePresence }) => {
   if (ternary) return <ShowTernary {...{ isTrue, children }} />;
@@ -37,104 +34,36 @@ export const Show = ({ ternary, isTrue, children, animatePresence }) => {
   return <ShowShortCircuit {...{ isTrue, children }} />;
 };
 
-/** Short-circuit rendering approach
- *
- * @param {Object} props - The component props.
- * @param {boolean[]} props.isTrue - An array of boolean values determining visibility of corresponding children.
- * @param {React.ReactNode} props.children - The child elements to be conditionally rendered.
- * @returns {JSX.Element} The rendered children that comply with the conditions specified in `isTrue`.
- *
- * Note: The `Show` component works as long as the variables being checked are located in the first layer of children.
- */
-
-const ShowShortCircuit = ({ isTrue, children }) => {
-  const renderChildren = (children, isTrue, indexRef) => {
-    return Children.map(children, (child) => {
-      if (!isValidElement(child)) {
-        return child;
-      }
-
-      // Combine conditions if `isTrue` is an array of conditions
-      const combinedCondition = Array.isArray(isTrue)
-        ? isTrue.every(Boolean) // `every` ensures all conditions are true
-        : isTrue;
-
-      indexRef.current += 1;
-
-      if (!combinedCondition) {
-        return null;
-      }
-
-      if (child.props.children) {
-        const nestedChildren = renderChildren(
-          child.props.children,
-          isTrue,
-          indexRef,
-        );
-        return cloneElement(child, { children: nestedChildren });
-      }
-
-      return child;
-    });
-  };
-
-  const indexRef = { current: 0 };
-  return <>{renderChildren(children, isTrue, indexRef)}</>;
-};
-
-const ShowShortCircuitAnimated = ({ isTrue, children }) => {
-  const renderChildren = (children, isTrue, indexRef) => {
-    return Children.map(children, (child) => {
-      if (!isValidElement(child)) {
-        return child; // Return non-element children directly
-      }
-
-      const combinedCondition = Array.isArray(isTrue)
-        ? isTrue.every(Boolean) // Check if all conditions are true
-        : isTrue;
-
-      // Increment index reference for tracking
-      indexRef.current += 1;
-
-      // Only render children if the condition is true
-      if (!combinedCondition) {
-        return null;
-      }
-
-      // Handle nested children
-      if (child.props.children) {
-        const nestedChildren = renderChildren(
-          child.props.children,
-          isTrue,
-          indexRef,
-        );
-        return cloneElement(child, { children: nestedChildren });
-      }
-
-      return child;
-    });
-  };
-
-  const indexRef = { current: 0 };
-
-  return (
-    <AnimatePresence>
-      {renderChildren(children, isTrue, indexRef).map((child) =>
-        child ? child : null,
-      )}
-    </AnimatePresence>
-  );
-};
-
 /**
  * Short-circuit rendering approach
  *
  * @param {Object} props - The component props.
- * @param {boolean[]} props.isTrue - An array of boolean values determining visibility of corresponding children.
+ * @param {boolean} props.isTrue - A boolean value determining visibility of children.
  * @param {React.ReactNode} props.children - The child elements to be conditionally rendered.
- * @returns {JSX.Element} The rendered children that comply with the conditions specified in `isTrue`.
+ * @returns {JSX.Element|null} The rendered children if `isTrue` is true; otherwise, null.
+ */
+
+const ShowShortCircuit = ({ isTrue, children }) => isTrue && <>{children}</>;
+
+/**
+ * Short-circuit rendering with animation support
  *
- * Note: The `Show` component works as long as the variables being checked are located in the first layer of children.
+ * @param {Object} props - The component props.
+ * @param {boolean} props.isTrue - A boolean value determining visibility of children.
+ * @param {React.ReactNode} props.children - The child elements to be conditionally rendered.
+ * @returns {JSX.Element|null} The rendered children wrapped in AnimatePresence if `isTrue` is true; otherwise, null.
+ */
+
+const ShowShortCircuitAnimated = ({ isTrue, children }) => (
+  <AnimatePresence>{isTrue && children}</AnimatePresence>
+);
+
+/**
+ * Ternary conditional rendering approach
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child elements to be evaluated.
+ * @returns {JSX.Element|null} The rendered child that matches the `isTrue` condition or the default child.
  */
 
 const ShowTernary = (props) => {
@@ -152,7 +81,6 @@ const ShowTernary = (props) => {
   return when || otherwise;
 };
 
-// Use the below ONLY if you want to use the ternary conditional rendering
-// approach.
+// Use the below ONLY if you want to use the ternary conditional rendering approach.
 Show.When = ({ isTrue, children }) => isTrue && children;
 Show.Else = ({ render, children }) => render || children;
