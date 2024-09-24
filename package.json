@@ -14,6 +14,7 @@
     "@headlessui/react": "^2.1.8",
     "@heroicons/react": "^2.1.5",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.9",
     "clsx": "^2.1.1",
     "framer-motion": "^11.5.5",
     "fs-extra": "^11.2.0",
@@ -21,10 +22,12 @@
     "lodash": "^4.17.21",
     "mobx": "^6.13.2",
     "mobx-react-lite": "^4.0.7",
+    "newsapi": "^2.4.1",
     "next": "14.2.13",
     "next-cloudinary": "^6.13.0",
     "react": "^18",
     "react-dom": "^18",
+    "swr": "^2.2.5",
     "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
