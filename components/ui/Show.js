@@ -43,7 +43,8 @@ export const Show = ({ ternary, isTrue, children, animatePresence }) => {
  * @returns {JSX.Element|null} The rendered children if `isTrue` is true; otherwise, null.
  */
 
-const ShowShortCircuit = ({ isTrue, children }) => isTrue && <>{children}</>;
+const ShowShortCircuit = ({ isTrue = true, children }) =>
+  isTrue && <>{children}</>;
 
 /**
  * Short-circuit rendering with animation support
@@ -54,7 +55,7 @@ const ShowShortCircuit = ({ isTrue, children }) => isTrue && <>{children}</>;
  * @returns {JSX.Element|null} The rendered children wrapped in AnimatePresence if `isTrue` is true; otherwise, null.
  */
 
-const ShowShortCircuitAnimated = ({ isTrue, children }) => (
+const ShowShortCircuitAnimated = ({ isTrue = true, children }) => (
   <AnimatePresence>{isTrue && children}</AnimatePresence>
 );
 

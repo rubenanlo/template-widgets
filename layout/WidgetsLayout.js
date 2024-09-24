@@ -1,8 +1,9 @@
+import { Fragment } from "react";
 import { observer } from "mobx-react-lite";
-import WidgetNews from "@/components/widgets/WidgetNews";
 import { Show } from "@/components/ui/Show";
 import { Container } from "@/components/ui/Container";
 import { showUp, toggleWidget } from "@/library/animations";
+import { widgets } from "@/library/widgets";
 import { useGeneralStore } from "@/providers/generalStore";
 
 const BackDrop = (props) => (
@@ -25,13 +26,14 @@ const WidgetsLayout = () => {
         onMouseEnter={() => setIsWidgetsOn(!isWidgetsOn)}
         onMouseLeave={() => setIsWidgetsOn(!isWidgetsOn)}
         {...toggleWidget(isWidgetsOn)}
+        className="scrollbar-hide"
       >
         <Show isTrue={isWidgetsOn}>
-          <Container className="fixed inset-y-0 right-0 flex h-full w-96 overflow-auto py-16 scrollbar-hide">
-            <Container className="mx-auto flex w-4/5 flex-col space-y-6">
-              <WidgetNews />
-            </Container>
-          </Container>
+          <Container.Flex className="mx-auto w-4/5 flex-col space-y-6">
+            {widgets.map(({ name, component }) => (
+              <Fragment key={name}>{component}</Fragment>
+            ))}
+          </Container.Flex>
         </Show>
       </Container.Animated>
     </>
