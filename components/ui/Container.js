@@ -19,13 +19,14 @@ export const Container = ({ children, as, className, ...props }) => {
 };
 
 Container.Animated = function ContainerAnimated({
-  children,
+  // children,
   className,
+  component,
   ...props
 }) {
   return (
     <motion.div className={clsx(className)} {...props}>
-      {children}
+      {component}
     </motion.div>
   );
 };
