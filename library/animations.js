@@ -14,7 +14,8 @@ export const showUp = {
   transition: { duration: 0.5 },
 };
 
-// Goes with WidgetsToggle component
+// Goes with WidgetsLayout component. This controls the main container which
+// changes from a triangle to a full container where the widgets go
 export const toggleWidget = (isWidgetsOn) => {
   const hidden = {
     position: "absolute",

@@ -19,14 +19,13 @@ export const Container = ({ children, as, className, ...props }) => {
 };
 
 Container.Animated = function ContainerAnimated({
-  // children,
+  children,
   className,
-  component,
   ...props
 }) {
   return (
     <motion.div className={clsx(className)} {...props}>
-      {component}
+      {children}
     </motion.div>
   );
 };
@@ -68,20 +67,13 @@ Container.Columns = function ContainerColumns({
   );
 };
 
-Container.Flex = function ContainerFlex({ children, className, ...props }) {
-  const classNameProp = turnObjectIntoString(className);
+Container.Flex = function ContainerFlex({ as, children, className, ...props }) {
+  let Component = as ?? "div";
+
   return (
-    <div
-      className={clsx(
-        classNameProp,
-        "flex",
-        className?.flex === undefined &&
-          "flex-row items-center justify-between",
-      )}
-      {...props}
-    >
+    <Component className={clsx(className, "flex")} {...props}>
       {children}
-    </div>
+    </Component>
   );
 };
 
