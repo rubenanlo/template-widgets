@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import { fontFamily } from "tailwindcss/defaultTheme";
 const aspectRatio = require("@tailwindcss/aspect-ratio");
+const scrollbarHide = require("tailwind-scrollbar-hide");
 
 module.exports = {
   content: [
@@ -12,9 +13,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#080808",
+        background: "var(--background)",
         foreground: "var(--foreground)",
-        backDrop: "#252424",
+        backDrop: "var(--backdrop)",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
@@ -22,5 +23,5 @@ module.exports = {
       },
     },
   },
-  plugins: [aspectRatio],
+  plugins: [aspectRatio, scrollbarHide],
 };
