@@ -36,7 +36,7 @@ export const toggleWidget = (isWidgetsOn) => {
     marginRight: "0rem",
     height: "100%",
     width: "24rem",
-    overflow: "auto",
+    overflow: "hidden",
     backgroundColor: [colors.foreground, colors.background],
     paddingTop: "4rem",
     zIndex: 10,

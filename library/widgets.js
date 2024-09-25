@@ -2,7 +2,7 @@ import WidgetNews from "@/components/widgets/WidgetNews";
 
 export const widgets = [
   {
-    name: "News",
+    name: "Your news",
     component: <WidgetNews />,
   },
 ];

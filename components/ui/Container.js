@@ -137,31 +137,13 @@ Container.Logo = function ContainerLogo({ className, original }) {
 
 Container.Link = function ContainerLink({
   children,
-  text,
   className,
   href,
-  onClick,
-  Component,
-  componentProps,
   ...props
 }) {
-  const classNameParent = turnObjectIntoString(className?.parent);
-  const classNameChild = turnObjectIntoString(className?.child);
-
   return (
-    <Link
-      href={href}
-      className={clsx(classNameParent, "cursor-pointer")}
-      onClick={onClick}
-      {...props}
-    >
-      {Component && (
-        <Component
-          className={clsx(classNameChild, "h-6 w-auto fill-zinc-500")}
-          {...componentProps}
-        />
-      )}
-      {text || children}
+    <Link href={href} className={clsx(className, "cursor-pointer")} {...props}>
+      {children}
     </Link>
   );
 };

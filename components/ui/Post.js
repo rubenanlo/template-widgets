@@ -2,26 +2,14 @@ import Link from "next/link";
 import clsx from "clsx";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 
-export function Post({
-  as,
-  className,
-  children,
-  narrowWidth,
-  sameHeight,
-  fullWidth,
-  ...props
-}) {
+export function Post({ as, className, children, ...props }) {
   let Component = as ?? "div";
-  const classNameProp = className;
 
   return (
     <Component
       className={clsx(
-        classNameProp,
-        narrowWidth ? "p-5" : "p-5 lg:rounded-none lg:border-none lg:p-0",
-        sameHeight && "h-full",
-        fullWidth ? "w-full" : "w-3/4 lg:w-full",
-        "group relative flex flex-col items-start rounded-2xl border border-zinc-700/40 dark:border-zinc-700/60",
+        className,
+        "group relative flex w-full flex-col items-start",
       )}
       {...props}
     >
@@ -87,7 +75,7 @@ Post.Cta = function PostCta({ text, noChevron }) {
   return (
     <div
       aria-hidden="true"
-      className="text-orange-tertiary relative mt-4 flex items-center text-sm font-medium"
+      className="text-orange-tertiary relative mt-4 flex text-sm font-medium"
     >
       {text}
       {noChevron ? null : (

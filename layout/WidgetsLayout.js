@@ -1,10 +1,10 @@
-import { Fragment } from "react";
 import { observer } from "mobx-react-lite";
 import { Show } from "@/components/ui/Show";
 import { Container } from "@/components/ui/Container";
 import { showUp, toggleWidget } from "@/library/animations";
 import { widgets } from "@/library/widgets";
 import { useGeneralStore } from "@/providers/generalStore";
+import { Typography } from "@/components/ui/Typography";
 
 const BackDrop = (props) => (
   <Container.Animated
@@ -26,12 +26,20 @@ const WidgetsLayout = () => {
         onMouseEnter={() => setIsWidgetsOn(!isWidgetsOn)}
         onMouseLeave={() => setIsWidgetsOn(!isWidgetsOn)}
         {...toggleWidget(isWidgetsOn)}
-        className="scrollbar-hide"
+        className="shadow-2xl shadow-gray-700"
       >
         <Show isTrue={isWidgetsOn}>
-          <Container.Flex className="mx-auto w-4/5 flex-col space-y-6">
+          <Container.Flex className="mx-auto h-[90%] w-4/5 flex-col gap-y-16 overflow-auto scrollbar-hide">
             {widgets.map(({ name, component }) => (
-              <Fragment key={name}>{component}</Fragment>
+              <Container key={name}>
+                <Typography.Title title={name} as="h2" />
+                <Container
+                  key={name}
+                  className="relative mt-6 h-80 overflow-auto p-4 scrollbar-hide"
+                >
+                  {component}
+                </Container>
+              </Container>
             ))}
           </Container.Flex>
         </Show>
@@ -39,4 +47,5 @@ const WidgetsLayout = () => {
     </>
   );
 };
+
 export default observer(WidgetsLayout);
