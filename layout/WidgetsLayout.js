@@ -8,7 +8,7 @@ import { Typography } from "@/components/ui/Typography";
 
 const BackDrop = (props) => (
   <Container.Animated
-    className="absolute top-0 h-screen w-screen bg-backDrop"
+    className="absolute top-0 z-10 h-screen w-screen bg-backDrop"
     {...showUp}
     {...props}
   />
