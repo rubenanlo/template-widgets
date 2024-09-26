@@ -13,9 +13,16 @@ const BackDrop = (props) => (
     {...props}
   />
 );
-
 const WidgetsLayout = () => {
   const { isWidgetsOn, setIsWidgetsOn } = useGeneralStore();
+
+  const handleMouseEnter = () => {
+    if (!isWidgetsOn) setIsWidgetsOn(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (isWidgetsOn) setIsWidgetsOn(false);
+  };
 
   return (
     <>
@@ -23,8 +30,8 @@ const WidgetsLayout = () => {
         <BackDrop />
       </Show>
       <Container.Animated
-        onMouseEnter={() => setIsWidgetsOn(!isWidgetsOn)}
-        onMouseLeave={() => setIsWidgetsOn(!isWidgetsOn)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         {...toggleWidget(isWidgetsOn)}
         className="shadow-2xl shadow-gray-700"
       >
