@@ -18,7 +18,7 @@ export const showUp = {
 // changes from a triangle to a full container where the widgets go
 export const toggleWidget = (isWidgetsOn) => {
   const hidden = {
-    position: "absolute",
+    position: "fixed",
     right: "20px",
     marginTop: "1.2rem",
     width: "2rem",
@@ -26,7 +26,6 @@ export const toggleWidget = (isWidgetsOn) => {
     borderLeft: "1rem solid transparent",
     borderRight: "1rem solid transparent",
     borderTop: `1.5rem solid ${colors.foreground}`,
-    zIndex: 10,
   };
   const visible = {
     position: "fixed",
@@ -39,7 +38,6 @@ export const toggleWidget = (isWidgetsOn) => {
     overflow: "hidden",
     backgroundColor: [colors.foreground, colors.background],
     paddingTop: "4rem",
-    zIndex: 10,
     transition: {
       duration: 0.3,
     },

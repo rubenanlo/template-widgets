@@ -8,7 +8,7 @@ import { Typography } from "@/components/ui/Typography";
 
 const BackDrop = (props) => (
   <Container.Animated
-    className="absolute top-0 z-10 h-screen w-screen bg-backDrop"
+    className="absolute top-0 z-20 h-screen w-screen bg-backDrop"
     {...showUp}
     {...props}
   />
@@ -33,7 +33,7 @@ const WidgetsLayout = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         {...toggleWidget(isWidgetsOn)}
-        className="shadow-2xl shadow-gray-700"
+        className="z-20 shadow-2xl shadow-gray-700"
       >
         <Show isTrue={isWidgetsOn}>
           <Container.Flex className="mx-auto h-[90%] w-4/5 flex-col gap-y-16 overflow-auto scrollbar-hide">

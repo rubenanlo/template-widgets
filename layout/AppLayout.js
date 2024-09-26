@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { Container } from "@/components/ui/Container";
-import WidgetsLayout from "./WidgetsLayout";
+import WidgetsLayout from "@/layout/WidgetsLayout";
 
 const AppLayout = ({ children }) => {
   return (
