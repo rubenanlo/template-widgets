@@ -42,7 +42,7 @@ const WidgetsLayout = () => {
                 <Typography.Title title={name} as="h2" />
                 <Container
                   key={name}
-                  className="relative mt-6 h-80 overflow-auto p-4 scrollbar-hide"
+                  className="relative mt-6 h-80 p-4 scrollbar-hide"
                 >
                   {component}
                 </Container>

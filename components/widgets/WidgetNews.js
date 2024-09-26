@@ -22,14 +22,12 @@ import { useGeneralStore } from "@/providers/generalStore";
 
 // TODO: to improve displaying relevant information in the event of an error.
 
-const WidgetNews = () => {
-  return (
-    <>
-      <SelectSource />
-      <Articles />
-    </>
-  );
-};
+const WidgetNews = () => (
+  <>
+    <SelectSource />
+    <Articles />
+  </>
+);
 
 export default WidgetNews;
 
