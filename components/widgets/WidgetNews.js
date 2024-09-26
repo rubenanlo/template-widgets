@@ -101,7 +101,7 @@ const SelectSource = observer(() => {
 
   if (sourceError) return <Container />;
 
-  if (!sourcesData) return <Container>Loading...</Container>;
+  if (!sourcesData) return <Container />;
 
   const { sources } = sourcesData;
 

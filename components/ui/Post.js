@@ -1,4 +1,3 @@
-import Link from "next/link";
 import clsx from "clsx";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 
@@ -17,28 +16,6 @@ export function Post({ as, className, children, ...props }) {
     </Component>
   );
 }
-
-Post.Icon = function PostIcon({ Icon, className, ...props }) {
-  const classNameParent = className.parent;
-  const classNameChild = className.child;
-
-  return (
-    <span className={clsx(classNameParent)}>
-      <Icon
-        {...props}
-        className={clsx(classNameChild, "text-zinc-800 dark:text-zinc-400")}
-      />
-    </span>
-  );
-};
-
-Post.Link = function PostLink({ children, ...props }) {
-  return (
-    <>
-      <Link {...props}>{children}</Link>
-    </>
-  );
-};
 
 Post.Title = function PostTitle({ as, href, title, className }) {
   let Component = as ?? "h1";
@@ -82,36 +59,5 @@ Post.Cta = function PostCta({ text, noChevron }) {
         <ChevronRightIcon className="ml-1 h-4 w-4 stroke-current" />
       )}
     </div>
-  );
-};
-
-Post.Eyebrow = function PostEyebrow({
-  as,
-  decorate = false,
-  className,
-  date,
-  ...props
-}) {
-  let Component = as ?? "p";
-
-  return (
-    <Component
-      className={clsx(
-        className,
-        "relative order-first mb-3 flex items-center text-sm text-zinc-400 dark:text-zinc-500",
-        decorate && "pl-3.5",
-      )}
-      {...props}
-    >
-      {decorate && (
-        <span
-          className="absolute inset-y-0 left-0 flex items-center"
-          aria-hidden="true"
-        >
-          <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500" />
-        </span>
-      )}
-      {date}
-    </Component>
   );
 };
