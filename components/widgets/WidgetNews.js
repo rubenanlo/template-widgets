@@ -20,51 +20,55 @@ import { useGeneralStore } from "@/providers/generalStore";
 // combine a general state management with mobx and a custom hook to fetch the
 // data.
 
-// TODO: to improve displaying relevant information in the event of an error
+// TODO: to improve displaying relevant information in the event of an error.
 
 const WidgetNews = () => {
-  const { selectedSource } = useGeneralStore();
-
-  const { sourcesData, articlesData, error } = useFetchNews(selectedSource);
-
-  if (error) return <Container>Failed to load news, contact us</Container>;
-  if (!sourcesData || !articlesData) return <Container>Loading...</Container>;
-
-  const { sources } = sourcesData;
-  const { articles } = articlesData;
-
   return (
     <>
-      <SelectSource sources={sources} />
-      <Show ternary>
-        <Show.When isTrue={articles?.length > 0}>
-          <Articles articles={articles} />
-        </Show.When>
-        <Show.Else>
-          <Typography.Paragraph paragraph="No news available for this source." />
-        </Show.Else>
-      </Show>
+      <SelectSource />
+      <Articles />
     </>
   );
 };
 
-export default observer(WidgetNews);
+export default WidgetNews;
 
 /* ********** ARTICLES COMPONENT *********
 The Articles and article components handle all the logic to display each article
 fetched from the API.
 */
 
-const Articles = ({ articles }) => (
-  <Container.Flex className="w-full flex-col gap-y-10">
-    {articles.map((article) => (
-      <Article key={article.title} article={article} />
-    ))}
-  </Container.Flex>
-);
+const Articles = observer(() => {
+  const { selectedSource } = useGeneralStore();
+
+  const { articlesData, articleError } = useFetchNews(selectedSource);
+
+  if (articleError)
+    return (
+      <Container>Failed to load news, check if you exceed your limit</Container>
+    );
+  if (!articlesData) return <Container>Loading...</Container>;
+
+  const { articles } = articlesData;
+
+  return (
+    <Show ternary>
+      <Show.When isTrue={articles?.length > 0}>
+        <Container.Flex className="h-4/5 w-full flex-col gap-y-10 overflow-auto scrollbar-hide">
+          {articles.map((article) => (
+            <Article key={article.title} article={article} />
+          ))}
+        </Container.Flex>
+      </Show.When>
+      <Show.Else>
+        <Typography.Paragraph paragraph="No news available for this source." />
+      </Show.Else>
+    </Show>
+  );
+});
 
 const Article = ({ article: { url, title, description } }) => (
-  <Post as="article" className="">
+  <Post as="article">
     <Container.Link
       href={url}
       className="flex h-full w-full flex-col justify-between"
@@ -85,9 +89,17 @@ right information
 
 */
 
-const SelectSource = observer(({ sources }) => {
-  const { selectedSource, setSelectedSource } = useGeneralStore();
+const SelectSource = observer(() => {
   const [query, setQuery] = useState("");
+  const { selectedSource, setSelectedSource } = useGeneralStore();
+
+  const { sourcesData, sourceError } = useFetchNews();
+
+  if (sourceError) return <Container />;
+
+  if (!sourcesData) return <Container>Loading...</Container>;
+
+  const { sources } = sourcesData;
 
   const filteredSources =
     query === ""
