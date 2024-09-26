@@ -1,7 +1,5 @@
 import { useState } from "react";
-import useSWR from "swr";
-import { Post } from "../ui/Post";
-import { Container } from "../ui/Container";
+import { observer } from "mobx-react-lite";
 import {
   Combobox,
   ComboboxButton,
@@ -11,33 +9,26 @@ import {
   Label,
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { Typography } from "../ui/Typography";
-import { Show } from "../ui/Show";
+import { Post } from "@/components/ui/Post";
+import { Container } from "@/components/ui/Container";
+import { Typography } from "@/components/ui/Typography";
+import { Show } from "@/components/ui/Show";
+import { useFetchNews } from "@/helpers/fetchData";
 import { useGeneralStore } from "@/providers/generalStore";
-import { observer } from "mobx-react-lite";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+// This widget fetches articles from newsapi.org and displays them in a list. We
+// combine a general state management with mobx and a custom hook to fetch the
+// data.
+
+// TODO: to improve displaying relevant information in the event of an error
 
 const WidgetNews = () => {
   const { selectedSource } = useGeneralStore();
-  console.log("🚀 ~ WidgetNews ~ selectedSource:", selectedSource);
 
-  const { data: sourcesData } = useSWR(
-    `https://newsapi.org/v2/top-headlines/sources?apiKey=${"4e1d7b146c4240f7919a802488db30a3"}`,
-    fetcher,
-  );
+  const { sourcesData, articlesData, error } = useFetchNews(selectedSource);
 
-  const { data: articlesData, error } = useSWR(
-    selectedSource
-      ? `https://newsapi.org/v2/top-headlines?sources=${selectedSource}&apiKey=${"4e1d7b146c4240f7919a802488db30a3"}`
-      : null,
-    fetcher,
-  );
-  console.log("🚀 ~ WidgetNews ~ sourcesData:", sourcesData);
-  console.log("🚀 ~ WidgetNews ~ articlesData:", articlesData);
-
-  if (error) return <div>Failed to load news, contact us</div>;
-  if (!sourcesData || !articlesData) return <div>Loading...</div>;
+  if (error) return <Container>Failed to load news, contact us</Container>;
+  if (!sourcesData || !articlesData) return <Container>Loading...</Container>;
 
   const { sources } = sourcesData;
   const { articles } = articlesData;
@@ -58,6 +49,11 @@ const WidgetNews = () => {
 };
 
 export default observer(WidgetNews);
+
+/* ********** ARTICLES COMPONENT *********
+The Articles and article components handle all the logic to display each article
+fetched from the API.
+*/
 
 const Articles = ({ articles }) => (
   <Container.Flex className="w-full flex-col gap-y-10">
@@ -80,19 +76,31 @@ const Article = ({ article: { url, title, description } }) => (
   </Post>
 );
 
+/* ********** SELECT SOURCE COMPONENT *********
+
+The SelectSource component is a dropdown that allows the user to select a news
+source. This template was taken from Tailwind and refactored to avoid
+unnecessary code, to make it more readable and to add some logic to fetch the
+right information
+
+*/
+
 const SelectSource = observer(({ sources }) => {
   const { selectedSource, setSelectedSource } = useGeneralStore();
   const [query, setQuery] = useState("");
+
   const filteredSources =
     query === ""
       ? sources
-      : sources.filter((source) => {
+      : sources?.filter((source) => {
           return source.name.toLowerCase().includes(query.toLowerCase());
         });
 
-  const getId = (sourceInput) => {
-    return sources.find((source) => source.name === sourceInput).id;
-  };
+  const getId = (sourceInput) =>
+    sources?.find((source) => source.name === sourceInput).id;
+
+  const getName = (sourceInput) =>
+    sources?.find((source) => source.id === sourceInput).name;
 
   return (
     <Combobox
@@ -112,7 +120,7 @@ const SelectSource = observer(({ sources }) => {
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
           onChange={(event) => setQuery(event.target.value)}
           onBlur={() => setQuery("")}
-          displayValue={(source) => source}
+          displayValue={(source) => getName(source)}
         />
         <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronUpDownIcon
@@ -122,9 +130,9 @@ const SelectSource = observer(({ sources }) => {
         </ComboboxButton>
       </Container>
 
-      {filteredSources.length > 0 && (
+      <Show isTrue={filteredSources?.length > 0}>
         <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-          {filteredSources.map((source) => (
+          {filteredSources?.map((source) => (
             <ComboboxOption
               key={source.id}
               value={source.name}
@@ -139,7 +147,7 @@ const SelectSource = observer(({ sources }) => {
             </ComboboxOption>
           ))}
         </ComboboxOptions>
-      )}
+      </Show>
     </Combobox>
   );
 });

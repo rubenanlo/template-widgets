@@ -6,7 +6,7 @@ const generalStoreContext = createContext(null);
 export const GeneralStoreProvider = ({ children }) => {
   const generalState = useLocalObservable(() => ({
     // --- OBSERVABLES ---
-    isWidgetsOn: true, // to state when to trigger the loading animation (only applicable to move from index to slug)
+    isWidgetsOn: false, // to state when to trigger the loading animation (only applicable to move from index to slug)
     selectedSource: "bbc-news", // to state when to trigger the loading animation (only applicable to move from index to slug)
 
     // --- ACTIONS:SETTERS ---
