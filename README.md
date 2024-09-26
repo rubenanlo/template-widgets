@@ -4,7 +4,12 @@ This web application holds a simple structure to add multiple widgets as simple 
 
 # Main stack:
 
-Nextjs, Tailwind, Framer, Mobx, swr, cloudinary, pnpm package manager, eslint, etc
+- Frontend: Next.js, Tailwind CSS, Framer Motion
+- State Management: MobX
+- Data Fetching: SWR
+- Image Handling: Cloudinary
+- Package Manager: pnpm
+- Linting: ESLint
 
 # How to add new widgets
 
@@ -45,25 +50,27 @@ import { showUp } from "@/library/animations";
 
 ## Cloudinary:
 
-Handles the credentials to cloudinary to upload images. Make sure you save the following variables in a .env file:
+Handles the credentials to Cloudinary for image uploads. Make sure you save the following variables in a .env file:
 
-- NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-- CLOUDINARY_API_KEY
-- CLOUDINARY_API_SECRET
+- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_API_KEY`
+- `CLOUDINARY_API_SECRET`
 
-This web application tries to simplify the process of adding images. Thus, it handles certain operations in the backend so that you can use a custom Container.Image component in the frontend.
+This web application simplifies the process of adding images by handling certain operations in the backend, allowing you to use a custom `Container.Image` component in the frontend.
 
-- Backend:
+### Backend:
 
-  1. save new images in the directory `public/assets`
-  2. run the command `pnpm run import-image` in the terminal, and follow the prompts. If you are reuploading an existing image, delete it in the `/optimization/excludedImages.json` file.
+1. Save new images in the `public/assets` directory.
+2. Run the command `pnpm run import-image` in the terminal, and follow the prompts.
+   > Note: If you are reuploading an existing image, delete it in the `/optimization/excludedImages.json` file.
 
-- Frontend: 2. use the [Container.Image](/components/ui/Container.js) component, and pass a prop named `name` with the name (without extension) of the image you want. That's it.
+### Frontend:
 
-A couple of considerations:
+Use the [Container.Image](/components/ui/Container.js) component, and pass a prop named `name` with the name (without extension) of the image you want.
 
-- The backend creates a file named `images.json` in the public directory. This file acts a repository of all the images with the alt, src, format, width and height. It also updates the file excludedImages.json so that the existing images are not being re-processed when adding new images. It uploads the image into your cloudinary account. It re-dimensions the image based on the user's input, and reduces the quality as per the user choice. It also checks among png, jpeg and webp, which format guarantees the lower file size, and turns the image into that format. While running the script, the user needs to choose the dimensions that are pre-determined in the file `getDimensions`, along with setting up a specific quality.
-- The frontend component Container.Image first checks if the image exists in cloudinary and renders the specific cloudinary component (CldImage) if it exists, if not, it triggers a fallback image (saved locally in the repo) plus it switches to Nextjs Image component. Since the CldImage is a wrapper of the Nextjs component, you can pass the same props that are saved in the images.json file. This way, you can also avoid having to hardcode the height and width of each image (a requirement to use Image component).
+> Important: The backend generates a file named `images.json` in the public directory. This file serves as a repository for all images, storing their alt text, source URL, format, width, and height. Additionally, it updates the `excludedImages.json` file to prevent existing images from being re-processed when new images are added. The backend uploads images to your Cloudinary account, resizes them based on user input, and reduces their quality according to user preferences. It also determines the optimal format (png, jpeg, or webp) to ensure the smallest file size and converts the image to that format. When running the script, users must select dimensions from the pre-defined options in the `getDimensions` file and specify the desired quality.
+
+> Important: The `Container.Image` frontend component first checks if the image exists in Cloudinary. If it does, it renders the Cloudinary component (`CldImage`). If the image does not exist in Cloudinary, it falls back to a locally saved image and switches to the Next.js `Image` component. Since `CldImage` is a wrapper around the Next.js `Image` component, you can pass the same props that are saved in the `images.json` file. This approach allows you to avoid hardcoding the alt, height and width of each image, which is a requirement for using the Next.js `Image` component.
 
 ## Show
 
