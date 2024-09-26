@@ -17,6 +17,8 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         backDrop: "var(--backdrop)",
+        "blue-primary": "var(--blue)",
+        "green-primary": "var(--green)",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],

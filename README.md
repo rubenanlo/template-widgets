@@ -1,3 +1,8 @@
+# Updates
+
+- [x] Template for future widgets for desktop version
+- [ ] For mobile version
+
 # Introduction
 
 This web application holds a simple structure to add multiple widgets as simple as possible. The following paragraphs depict how to add new widgets and other considerations while adding elements to this web application.
