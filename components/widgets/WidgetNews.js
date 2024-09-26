@@ -20,7 +20,13 @@ import { useGeneralStore } from "@/providers/generalStore";
 // combine a general state management with mobx and a custom hook to fetch the
 // data.
 
-// TODO: to improve displaying relevant information in the event of an error.
+/* TODO: to improve displaying relevant information in the event of an error.
+
+1. Add a message to the user when the API limit is exceeded.
+2. Add a message to the user when the API key is invalid.
+3. Add a loading animation while fetching the data.
+
+*/
 
 const WidgetNews = () => (
   <>
