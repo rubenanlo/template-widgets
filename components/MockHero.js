@@ -53,8 +53,7 @@ const MockHero = () => {
           </Container.Animated>
         </Container.Flex>
         <Container href="#" className="mt-12 text-sm font-semibold leading-6">
-          Start boosting your productivity, scroll down{" "}
-          <span aria-hidden="true">🡣</span>
+          Start here, scroll down <span aria-hidden="true">🡣</span>
         </Container>
       </Container>
     </Container>
