@@ -75,6 +75,7 @@ const Article = ({ article: { url, title, description } }) => (
   <Post as="article">
     <Container.Link
       href={url}
+      target="_blank"
       className="flex h-full w-full flex-col justify-between"
     >
       <Post.Title title={title} />

@@ -5,7 +5,6 @@ import { CldImage } from "next-cloudinary";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 import { Show } from "@/components/ui/Show";
-import { turnObjectIntoString } from "@/helpers/manipulateText";
 import images from "@/public/images.json";
 
 export const Container = ({ children, as, className, ...props }) => {
@@ -45,13 +44,8 @@ Container.Image = function ContainerImage({
   name,
   variant = "default",
 }) {
-  const classNameProp = turnObjectIntoString(className);
   const variants = {
-    post: turnObjectIntoString({
-      position: "w-[80%] mx-auto",
-      border: "rounded-2xl shadow-2xl",
-      other: "opacity-60",
-    }),
+    post: "w-[80%] mx-auto rounded-2xl shadow-2xl opacity-60",
     default: "",
   };
 
@@ -79,7 +73,7 @@ Container.Image = function ContainerImage({
   return (
     <Show isTrue={[name]}>
       <Component
-        className={clsx(classNameProp, variants[variant])}
+        className={clsx(className, variants[variant])}
         {...imageSrc}
         onError={handleError}
       />

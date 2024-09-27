@@ -14,6 +14,19 @@ export const showUp = {
   transition: { duration: 0.5 },
 };
 
+export const rotate = (display) => {
+  const original = {
+    rotate: "0deg",
+  };
+  const rotated = {
+    rotate: "90deg",
+    transition: {
+      duration: 0.3,
+    },
+  };
+  return display ? { animate: rotated } : { animate: original };
+};
+
 // Goes with WidgetsLayout component. This controls the main container which
 // changes from a triangle to a full container where the widgets go
 export const toggleWidget = (isWidgetsOn) => {
@@ -49,5 +62,12 @@ export const wordCarousel = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
+  transition: { duration: 0.5 },
+};
+
+export const fromTop = {
+  initial: { height: "0rem" },
+  animate: { height: "20rem" },
+  exit: { height: 0 },
   transition: { duration: 0.5 },
 };

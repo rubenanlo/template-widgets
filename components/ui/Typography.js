@@ -13,7 +13,7 @@ Typography.Title = function TypographyTitle({ as, title, className, props }) {
 
   const variants = {
     h1: "text-4xl font-bold tracking-tight sm:text-5xl",
-    h2: "text-2xl font-bold border-b border-zinc-600 pb-2",
+    h2: "text-2xl font-bold ",
   };
 
   return (
