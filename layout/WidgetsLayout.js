@@ -46,15 +46,21 @@ const WidgetsLayout = () => {
           <Container.Flex className="mx-auto h-[90%] w-4/5 flex-col gap-y-16 overflow-auto scrollbar-hide">
             {widgets.map(({ name, component }, index) => (
               <Container key={name}>
-                <Container.Flex className="justify-between border-b border-zinc-600 pb-2">
-                  <Typography.Title title={name} as="h2" />
-                  <Button.Animated
-                    className="w-5"
-                    component={<ChevronRightIcon />}
-                    onClick={() => handleOnClick(index)}
-                    {...rotate(widgetsDisplay?.[index].display)}
-                  />
-                </Container.Flex>
+                <Button
+                  key={name}
+                  onClick={() => handleOnClick(index)}
+                  className="w-full"
+                >
+                  <Container.Flex className="items-center justify-between border-b border-zinc-600 pb-2">
+                    <Typography.Title title={name} as="h2" />
+                    <Container.Animated
+                      className="w-8"
+                      {...rotate(widgetsDisplay?.[index].display)}
+                    >
+                      <ChevronRightIcon />
+                    </Container.Animated>
+                  </Container.Flex>
+                </Button>
                 <Show isTrue={widgetsDisplay?.[index].display} animatePresence>
                   <Container.Animated
                     key={name}
