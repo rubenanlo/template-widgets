@@ -66,8 +66,35 @@ export const wordCarousel = {
 };
 
 export const fromTop = {
-  initial: { height: "0rem" },
-  animate: { height: "20rem" },
-  exit: { height: 0 },
+  initial: {
+    height: "0rem",
+    position: "relative",
+    marginTop: 0,
+    opacity: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: "1rem",
+    paddingRight: "1rem",
+  },
+  animate: {
+    height: "20rem",
+    position: "relative",
+    marginTop: "1.5rem",
+    opacity: 1,
+    paddingTop: "1rem",
+    paddingBottom: "1rem",
+    paddingLeft: "1rem",
+    paddingRight: "1rem",
+  },
+  exit: {
+    height: 0,
+    position: "relative",
+    marginTop: 0,
+    opacity: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: "1rem",
+    paddingRight: "1rem",
+  },
   transition: { duration: 0.5 },
 };

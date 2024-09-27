@@ -58,7 +58,7 @@ const WidgetsLayout = () => {
                 <Show isTrue={widgetsDisplay[index].display} animatePresence>
                   <Container.Animated
                     key={name}
-                    className="relative mt-6 p-4 scrollbar-hide"
+                    className="scrollbar-hide"
                     {...fromTop}
                   >
                     {component}
