@@ -1,3 +1,5 @@
+![metadata](/public/assets/meta-image.png)
+
 # Updates
 
 - [x] Template for future widgets for desktop version
@@ -9,6 +11,11 @@
 This web application holds a simple structure to add multiple widgets as simple as possible. The following paragraphs depict how to add new widgets and other considerations while adding elements to this web application.
 
 > Important: This application can only be run in development due to limitations of newsapi.org, which does not allow to work in production under a free plan.
+
+To run this application, please add the following command:
+
+` pnpm install`
+`pnpm run dev`
 
 # Main stack:
 
