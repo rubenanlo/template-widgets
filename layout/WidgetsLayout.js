@@ -16,19 +16,19 @@ const BackDrop = (props) => (
   />
 );
 const WidgetsLayout = () => {
-  const { isWidgetsOn, setIsWidgetsOn } = useGeneralStore();
-  const { widgetsDisplay, toggleWidgetDisplay } = useGeneralStore();
-
+  const { isWidgetsOn, setIsWidgetsOn, widgetsDisplay, toggleWidgetDisplay } =
+    useGeneralStore();
   const handleMouseEnter = () => {
     if (!isWidgetsOn) setIsWidgetsOn(true);
   };
 
   const handleMouseLeave = () => {
     if (isWidgetsOn) setIsWidgetsOn(false);
+    toggleWidgetDisplay({ reset: true });
   };
 
   const handleOnClick = (index) => {
-    toggleWidgetDisplay(index);
+    toggleWidgetDisplay({ index });
   };
 
   return (
@@ -52,10 +52,10 @@ const WidgetsLayout = () => {
                     className="w-5"
                     component={<ChevronRightIcon />}
                     onClick={() => handleOnClick(index)}
-                    {...rotate(widgetsDisplay[index].display)}
+                    {...rotate(widgetsDisplay?.[index].display)}
                   />
                 </Container.Flex>
-                <Show isTrue={widgetsDisplay[index].display} animatePresence>
+                <Show isTrue={widgetsDisplay?.[index].display} animatePresence>
                   <Container.Animated
                     key={name}
                     className="scrollbar-hide"

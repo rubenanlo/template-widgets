@@ -10,7 +10,9 @@ export const GeneralStoreProvider = ({ children }) => {
     // --- OBSERVABLES ---
     isWidgetsOn: false,
     selectedSource: "bbc-news",
-    widgetsDisplay: observable(widgets), // Ensure widgets are deeply observable
+    widgetsDisplay: observable.array(
+      widgets.map((widget) => observable(widget)),
+    ),
 
     // --- ACTIONS:SETTERS ---
     setIsWidgetsOn(value) {
@@ -19,7 +21,14 @@ export const GeneralStoreProvider = ({ children }) => {
     setSelectedSource(value) {
       this.selectedSource = value;
     },
-    toggleWidgetDisplay(index) {
+    toggleWidgetDisplay({ index, reset = false }) {
+      if (reset) {
+        this.widgetsDisplay.forEach((widget) => {
+          widget.display = false;
+        });
+        return;
+      }
+
       this.widgetsDisplay[index].display = !this.widgetsDisplay[index].display;
     },
   }));
