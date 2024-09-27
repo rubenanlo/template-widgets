@@ -2,6 +2,7 @@
 
 - [x] Template for future widgets for desktop version
 - [ ] For mobile version
+- [ ] **Work with you to make this even better**
 
 # Introduction
 
@@ -84,3 +85,7 @@ This component substitutes short circuit and ternary conditions to render front 
 ## News Api
 
 If you want to use this widget, you need to add the key API to the .env file: NEXT_PUBLIC_NEWS_API_KEY
+
+## State management
+
+This application relies on [Mobx](https://mobx.js.org/README.html) to handle state management globally in the app. Note that the file rootProvider (`/providers/rootProviders.js) is a wrapper for all providers to be created in the app. This rootProvider is further used in `\_app.js`. If any new provider needs to be specifically placed elsewhere for optimization purposes, please do not use the rootProvider file

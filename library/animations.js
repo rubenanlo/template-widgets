@@ -5,6 +5,8 @@ const {
   theme: { colors },
 } = resolveConfig(tailwindConfig);
 
+// This is a collection of animations that are used throughout the app
+
 // Goes with animatePresence hook
 export const showUp = {
   initial: "hidden",

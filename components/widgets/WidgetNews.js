@@ -19,6 +19,8 @@ import { useGeneralStore } from "@/providers/generalStore";
 // This widget fetches articles from newsapi.org and displays them in a list. We
 // combine a general state management with mobx and a custom hook to fetch the
 // data.
+// Note that the Observer makes the component reactive to MobX state changes, as
+// part of the process of a global state management approach.
 
 /* TODO: to improve displaying relevant information in the event of an error.
 
@@ -28,6 +30,7 @@ import { useGeneralStore } from "@/providers/generalStore";
 
 */
 
+// Main widget component that combines the source selector and articles list
 const WidgetNews = () => (
   <>
     <SelectSource />

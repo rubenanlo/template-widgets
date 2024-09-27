@@ -8,6 +8,7 @@ import { Typography } from "@/components/ui/Typography";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/components/ui/Button";
 
+// BackDrop component: Displays a backdrop overlay with an animation when widgets are active
 const BackDrop = (props) => (
   <Container.Animated
     className="absolute top-0 z-20 h-screen w-screen bg-backDrop"
@@ -15,6 +16,8 @@ const BackDrop = (props) => (
     {...props}
   />
 );
+
+// Main component: Manages the display and interaction of widgets
 const WidgetsLayout = () => {
   const { isWidgetsOn, setIsWidgetsOn, widgetsDisplay, toggleWidgetDisplay } =
     useGeneralStore();
