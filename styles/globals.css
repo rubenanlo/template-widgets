@@ -4,20 +4,33 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #080808;
+  --backdrop: #201d22;
+  --blue: #80caff;
+  --green: #6dbb3c;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #080808;
     --foreground: #ededed;
+    --backdrop: #201d22;
+    --blue: #80caff;
+    --green: #6dbb3c;
   }
+}
+
+@font-face {
+  font-family: "Interphase";
+  src: url("/font/tt-interphases-pro-mono-trial-regular.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {

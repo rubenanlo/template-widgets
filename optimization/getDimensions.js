@@ -1,6 +1,6 @@
 const { prompt } = require("inquirer").default;
 const { icon, custom, original } = {
-  icon: (quality = 80) => ({ width: 50, quality: quality }),
+  icon: (quality = 80) => ({ width: 100, quality: quality }),
   custom: ({ width, quality = 80 }) => ({ width, quality }),
   original: (quality = 80) => ({ quality: quality }), // Original option doesn't specify any dimensions
 };
@@ -48,7 +48,7 @@ const promptUserForDimensions = async (fileName) => {
 const getDimensionsAndQuality = async (fileName, metadata) => {
   // Check if dimensions for this image are already stored
   const storedDimensions = dimensionsStore.find(
-    (item) => item.fileName === fileName
+    (item) => item.fileName === fileName,
   );
 
   if (storedDimensions) {

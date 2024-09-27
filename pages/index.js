@@ -1,3 +1,5 @@
-export default function Home() {
-  return <p>Hello</p>;
-}
+import MockHero from "@/components/MockHero";
+
+const Home = () => <MockHero />;
+
+export default Home;

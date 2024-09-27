@@ -5,7 +5,7 @@ const path = require("path");
 const cloudinary = require("../library/cloudinary");
 const formatNumber = require("../helpers/formatData");
 const { getDimensionsAndQuality } = require("./getDimensions.js");
-const cliProgress = require("cli-progress");
+// const cliProgress = require("cli-progress");
 
 const dirPath = path.join("public", "assets");
 const excludedImagesPath = path.join("optimization", "excludedImages.json");
@@ -132,7 +132,7 @@ const processImage = async (file, dimensionsAndQuality) => {
     // Upload the smallest file to Cloudinary
     const cloudinaryResult = await uploadToCloudinary(
       smallestFile.path,
-      fileName
+      fileName,
     );
     if (cloudinaryResult) {
       data[lastIndexData]["Cloudinary ID"] = cloudinaryResult.public_id;
@@ -144,7 +144,7 @@ const processImage = async (file, dimensionsAndQuality) => {
         smallestFile.format, // format
         cloudinaryResult.public_id, // src (Cloudinary ID)
         dimensions.width, // width
-        dimensions.height // height
+        dimensions.height, // height
       );
     }
 
@@ -161,10 +161,10 @@ const processImage = async (file, dimensionsAndQuality) => {
 };
 
 // Initialize the progress bar
-const progressBar = new cliProgress.SingleBar(
-  {},
-  cliProgress.Presets.shades_classic
-);
+// const progressBar = new cliProgress.SingleBar(
+//   {},
+//   cliProgress.Presets.shades_classic
+// );
 
 const processFiles = async () => {
   try {
@@ -189,7 +189,7 @@ const processFiles = async () => {
         const metadata = await sharp(path.join(dirPath, file)).metadata();
         const dimensionsAndQuality = await getDimensionsAndQuality(
           fileName,
-          metadata
+          metadata,
         );
         dimensionsAndQualityList.push({ file, dimensionsAndQuality });
       } catch (err) {
@@ -199,15 +199,18 @@ const processFiles = async () => {
 
     // Parallel processing of the images
     const promises = dimensionsAndQualityList.map(
-      ({ file, dimensionsAndQuality }, index) => {
+      (
+        { file, dimensionsAndQuality },
+        // ,  index
+      ) => {
         return (
           processImage(path.join(dirPath, file), dimensionsAndQuality)
             // .then(() => progressBar.update(index + 1))
             .catch((err) =>
-              console.error(`Failed to process file ${file}:`, err)
+              console.error(`Failed to process file ${file}:`, err),
             )
         );
-      }
+      },
     );
 
     await Promise.all(promises);
@@ -233,14 +236,14 @@ const processFiles = async () => {
         Quality: quality,
         "Cloudinary ID": cloudinaryId,
         Status: status,
-      })
+      }),
     );
 
     const displayError = errorLog.map(
       ({ File: file, "Cloudinary Error": error }) => ({
         File: file,
         "Cloudinary Error": error,
-      })
+      }),
     );
 
     if (displayData.length > 0) {
