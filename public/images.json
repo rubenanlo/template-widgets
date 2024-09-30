@@ -12,5 +12,19 @@
     "src": "icon",
     "width": 50,
     "height": 46
+  },
+  {
+    "alt": "favicon",
+    "format": "webp",
+    "src": "favicon",
+    "width": 50,
+    "height": 50
+  },
+  {
+    "alt": "meta-image",
+    "format": "webp",
+    "src": "meta-image",
+    "width": 2840,
+    "height": 1682
   }
 ]

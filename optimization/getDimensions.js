@@ -1,6 +1,6 @@
 const { prompt } = require("inquirer").default;
 const { icon, custom, original } = {
-  icon: (quality = 80) => ({ width: 100, quality: quality }),
+  icon: (quality = 80) => ({ width: 50, quality: quality }),
   custom: ({ width, quality = 80 }) => ({ width, quality }),
   original: (quality = 80) => ({ quality: quality }), // Original option doesn't specify any dimensions
 };
